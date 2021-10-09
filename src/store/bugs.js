@@ -1,15 +1,23 @@
 import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
 import produce from "immer";
 import { createSelector } from "reselect";
+import { apiCallBegan } from "./api";
 
 let lastId = 0;
 
 const slice = createSlice({
   name: "bugs",
-  initialState: [],
+  initialState: {
+    list: [],
+    loading: false,
+    lastFetch: null,
+  },
   reducers: {
+    bugsReceived: (state, action) => {
+      state.list = action.payload;
+    },
     bugAdded: (state, action) => {
-      state.push({
+      state.list.push({
         id: ++lastId,
         description: action.payload.description,
         resolved: false,
@@ -17,17 +25,17 @@ const slice = createSlice({
       });
     },
     bugResolved: (state, action) => {
-      const index = state.findIndex((bug) => bug.id === action.payload.id);
-      state[index].resolved = true;
+      const index = state.list.findIndex((bug) => bug.id === action.payload.id);
+      state.list[index].resolved = true;
     },
     bugRemoved: (state, action) => {
-      const index = state.findIndex((bug) => bug.id === action.payload.id);
-      state.splice(index, 1);
+      const index = state.list.findIndex((bug) => bug.id === action.payload.id);
+      state.list.splice(index, 1);
     },
     bugAssigned: (state, action) => {
       const { bugId, userId } = action.payload;
-      const index = state.findIndex((bug) => bug.id === bugId);
-      state[index].userId = userId;
+      const index = state.list.findIndex((bug) => bug.id === bugId);
+      state.list[index].userId = userId;
     },
   },
 });
@@ -35,7 +43,17 @@ const slice = createSlice({
 // console.log(slice)
 
 export const reducer = slice.reducer;
-export const { bugAdded, bugRemoved, bugResolved, bugAssigned } = slice.actions;
+export const { bugAdded, bugRemoved, bugResolved, bugAssigned, bugsReceived } =
+  slice.actions;
+
+//Action Creator
+const url = "/bugs";
+
+export const loadBugs = () =>
+  apiCallBegan({
+    url,
+    onSuccess: bugsReceived.type,
+  });
 
 //Selector function
 // export const getUnresolvedBugs = state =>

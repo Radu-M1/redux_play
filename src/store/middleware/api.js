@@ -8,8 +8,6 @@ export const api =
   async (action) => {
     if (action.type !== actions.apiCallBegan.type) {
       return next(action);
-      console.log("been here")
-      // return;
     }
 
     next(action);

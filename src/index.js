@@ -1,7 +1,12 @@
-import { createAction } from "@reduxjs/toolkit";
 import configureStore from "./store/configureStore";
+import { loadBugs } from "./store/bugs";
 
 import * as actions from "./store/api";
+
+
+const store = configureStore();
+
+store.dispatch(loadBugs());
 
 // import {
 //   bugAdded,
@@ -30,7 +35,6 @@ import * as actions from "./store/api";
 // // console.log(user1Bugs);
 // // console.log(store.getState())
 
-const store = configureStore();
 
 // store.dispatch((dispatch, getState) => {
 //   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
@@ -53,13 +57,15 @@ const store = configureStore();
 //   },
 // };
 
-const action = actions.apiCallBegan({
-  url: "/bugs",
-  onSuccess: "bugsReceived",
-  // onError: actions.apiCallFailed.type
-});
 
-store.dispatch(action);
+
+// const action = actions.apiCallBegan({
+//   url: "/bugs",
+//   onSuccess: "bugs/bugsReceived",
+//   // onError: actions.apiCallFailed.type
+// });
+
+// store.dispatch(action);
 
 // const store = configureStore();
 
