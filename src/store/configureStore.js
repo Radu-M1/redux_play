@@ -7,6 +7,8 @@ import { configureStore } from "@reduxjs/toolkit";
 // import { reducer } from './bugs'
 import { reducer } from "./reducer";
 import { logger as logger2 } from "./middleware/logger";
+import { toast } from "./middleware/toast";
+import { api } from "./middleware/api";
 
 import logger from "redux-logger";
 // import { func } from "./middleware/func";
@@ -23,7 +25,12 @@ export default function () {
   return configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(logger2({ destination: "Hi5" })),
+      getDefaultMiddleware()
+        .concat(logger2({ destination: "Hi5" }))
+        .concat(toast())
+        .concat(api()),
+    // middleware: (getDefaultMiddleware) =>
+    //   getDefaultMiddleware().concat(logger2({ destination: "Hi5" })),
     // middleware: [logger("console"), func],
     // middleware: [...getDefaultMiddleware(), logger({destination: "Hi5"})]
   });

@@ -1,4 +1,8 @@
+import { createAction } from "@reduxjs/toolkit";
 import configureStore from "./store/configureStore";
+
+import * as actions from "./store/api";
+
 // import {
 //   bugAdded,
 //   bugRemoved,
@@ -28,7 +32,38 @@ import configureStore from "./store/configureStore";
 
 const store = configureStore();
 
-store.dispatch((dispatch, getState) => {
-  dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
-  console.log(getState());
+// store.dispatch((dispatch, getState) => {
+//   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
+//   console.log(getState());
+// });
+
+// store.dispatch({
+//   type: "error",
+//   payload: { message: "An error occured." },
+// });
+
+// const action = {
+//   type: "apiCallBegan",
+//   payload: {
+//     url: "/bugs",
+//     // method: "get",
+//     // data: {},
+//     onSuccess: "bugsReceived",
+//     onError: "apiRequestFailed",
+//   },
+// };
+
+const action = actions.apiCallBegan({
+  url: "/bugs",
+  onSuccess: "bugsReceived",
+  // onError: actions.apiCallFailed.type
 });
+
+store.dispatch(action);
+
+// const store = configureStore();
+
+// store.dispatch((dispatch, getState) => {
+//   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
+//   console.log(getState());
+// });
