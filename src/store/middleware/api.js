@@ -10,16 +10,23 @@ export const api =
       return next(action);
     }
 
+    const { url, method, data, onSuccess, onError, onStart } = action.payload;
+
+    if (onStart) {
+      dispatch({ type: onStart });
+    }
+
     next(action);
 
-    const { url, method, data, onSuccess, onError } = action.payload;
     try {
+      console.log("DATA = ", data);
       const response = await axios.request({
         baseURL: "http://localhost:9001/api",
         url,
         method,
         data,
       });
+      console.log("RESPONSE = ", response);
       //General success dispatch
       dispatch(actions.apiCallSuccess(response.data));
       //Specific
@@ -28,10 +35,10 @@ export const api =
       }
     } catch (err) {
       //General
-      dispatch(actions.apiCallFailed(err));
+      dispatch(actions.apiCallFailed(err.message));
       //Specific
       if (onError) {
-        dispatch({ type: onError, payload: err });
+        dispatch({ type: onError, payload: err.message });
       }
     }
   };

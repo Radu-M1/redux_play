@@ -1,12 +1,15 @@
 import configureStore from "./store/configureStore";
-import { loadBugs } from "./store/bugs";
+import { loadBugs, addBug } from "./store/bugs";
 
 import * as actions from "./store/api";
 
-
 const store = configureStore();
 
-store.dispatch(loadBugs());
+store.dispatch(addBug({ description: "abcde" }));
+
+// store.dispatch(loadBugs());
+
+// setTimeout(() => store.dispatch(loadBugs()), 2000)
 
 // import {
 //   bugAdded,
@@ -35,7 +38,6 @@ store.dispatch(loadBugs());
 // // console.log(user1Bugs);
 // // console.log(store.getState())
 
-
 // store.dispatch((dispatch, getState) => {
 //   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
 //   console.log(getState());
@@ -56,8 +58,6 @@ store.dispatch(loadBugs());
 //     onError: "apiRequestFailed",
 //   },
 // };
-
-
 
 // const action = actions.apiCallBegan({
 //   url: "/bugs",
