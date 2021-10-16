@@ -1,11 +1,14 @@
 import configureStore from "./store/configureStore";
-import { loadBugs, addBug } from "./store/bugs";
+import { loadBugs, addBug, resolveBug, addUser } from "./store/bugs";
 
 import * as actions from "./store/api";
 
 const store = configureStore();
 
-store.dispatch(addBug({ description: "abcde" }));
+// store.dispatch(addBug({ description: "abcde" }));
+store.dispatch(loadBugs());
+store.dispatch(resolveBug(2));
+store.dispatch(addUser({ bugId: 4, userId: 3 }));
 
 // store.dispatch(loadBugs());
 

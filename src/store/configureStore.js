@@ -26,7 +26,7 @@ export default function () {
     reducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
-        .concat(logger2({ destination: "Hi5" }))
+        .concat(logger2())
         .concat(toast())
         .concat(api()),
     // middleware: (getDefaultMiddleware) =>
