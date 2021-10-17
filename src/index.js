@@ -1,7 +1,7 @@
 import configureStore from "./store/configureStore";
 import { loadBugs, addBug, resolveBug, addUser } from "./store/bugs";
 
-import * as actions from "./store/api";
+// import * as actions from "./store/api";
 
 const store = configureStore();
 

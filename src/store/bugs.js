@@ -52,7 +52,7 @@ const slice = createSlice({
 // console.log(slice)
 
 export const reducer = slice.reducer;
-export const {
+const {
   bugAdded,
   bugRemoved,
   bugResolved,
