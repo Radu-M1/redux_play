@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 import { createSelector } from "reselect";
 import { apiCallBegan } from "./api";
+import axios from "axios";
 
 // let lastId = 0;
 
@@ -75,9 +76,11 @@ export const loadBugs = () => (dispatch, getState) => {
     return;
   }
 
-  dispatch(
+  return dispatch(
     apiCallBegan({
       url,
+      method: 'get',
+      data: {},
       onStart: bugsRequested.type,
       onSuccess: bugsReceived.type,
       onError: bugsRequestFailed.type,
@@ -101,15 +104,25 @@ export const loadBugs = () => (dispatch, getState) => {
 export const getUnresolvedBugs = createSelector(
   (state) => state.entities.bugs,
   (state) => state.entities.projects,
-  (bugs, projects) => bugs.filter((bug) => !bug.resolved)
+  (bugs, projects) => bugs.list.filter((bug) => !bug.resolved)
 );
 
 export const getBugsByUser = (userId) =>
   createSelector(
     (state) => state.entities.bugs,
     // state => state.entities.projects,
-    (bugs) => bugs.filter((bug) => bug.userId === userId)
+    (bugs) => bugs.list.filter((bug) => bug.userId === userId)
   );
+
+// export const addBug = bug => async dispatch => {
+//   const response = await axios.request({
+//     baseURL: 'http://localhost:9001/api',
+//     url: '/bugs',
+//     method: 'POST',
+//     data: bug
+//   });
+//   dispatch(bugAdded(response.data))
+// }
 
 export const addBug = (bug) =>
   apiCallBegan({

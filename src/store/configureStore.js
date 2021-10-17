@@ -6,11 +6,11 @@ import { configureStore } from "@reduxjs/toolkit";
 
 // import { reducer } from './bugs'
 import { reducer } from "./reducer";
-import { logger as logger2 } from "./middleware/logger";
+import { logger } from "./middleware/logger";
 import { toast } from "./middleware/toast";
 import { api } from "./middleware/api";
 
-import logger from "redux-logger";
+// import logger from "redux-logger";
 // import { func } from "./middleware/func";
 
 // import { reducer as projectReducer } from './projects'
@@ -26,7 +26,7 @@ export default function () {
     reducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
-        .concat(logger2())
+        .concat(logger())
         .concat(toast())
         .concat(api()),
     // middleware: (getDefaultMiddleware) =>
